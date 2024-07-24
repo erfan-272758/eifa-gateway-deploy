@@ -1,20 +1,21 @@
 #!/bin/bash
+set -e
 
-binUrl=""
+binUrl="https://github.com/erfan-272758/eifa-gateway-deploy/releases/download/v2.0.14/server"
 serviceName="eifa-gateway.service"
 # requirements
 requirements(){
-    apt update -y
-    apt install -y wget
+    sudo apt update -y
+    sudo apt install -y wget
 }
 
 # download raw file
 download(){
-    wget -o /tmp/eifa-gateway $binUrl
+    wget -O /tmp/eifa-gateway $binUrl
 }
 # create service
 create_service(){
-    sudo cat > "/etc/systemd/system/$serviceName" <<EOF
+    sudo cat > "/tmp/$serviceName" <<EOF
 [Unit]
 Description=Eifa Gateway - A lightweight proxy service
 After=network.target
@@ -22,7 +23,9 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-RestartSec=1
+RestartSec=3
+StartLimitIntervalSec=0
+StartLimitBurst=0
 User=root
 WorkingDirectory=/etc/eifa-gateway
 ExecStart=/usr/local/bin/eifa-gateway
@@ -30,12 +33,13 @@ ExecStart=/usr/local/bin/eifa-gateway
 [Install]
 WantedBy=multi-user.target
 EOF
+sudo mv /tmp/$serviceName /etc/systemd/system/$serviceName
 }
 
 #  copy config
 copy_files(){
     # bin file
-    sudo cp /tmp/eifa-gateway /usr/local/bin/eifa-gateway
+    sudo mv /tmp/eifa-gateway /usr/local/bin/eifa-gateway
    
     # config file
     sudo mkdir -p /etc/eifa-gateway
@@ -52,14 +56,15 @@ copy_files(){
     sudo chown root:root /usr/local/bin/eifa-gateway
     sudo chmod 700 /usr/local/bin/eifa-gateway
     sudo chown -R  root:root /etc/eifa-gateway
-    sudo chmod -R  400 /etc/eifa-gateway/*
+    sudo chmod -R  600 /etc/eifa-gateway/*
     
 }
 
 # start service
 start_service(){
     sudo systemctl daemon-reload
-    sudo systemctl enable --now $serviceName
+    sudo systemctl enable $serviceName
+    sudo systemctl start $serviceName
 }
 
 requirements
