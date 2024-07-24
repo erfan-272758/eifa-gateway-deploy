@@ -3,7 +3,7 @@ set -e
 version=$1
 repoUrl="https://raw.githubusercontent.com/erfan-272758/eifa-gateway-deploy/main"
 composeCmd=""
-work_dir="/opt/deploy/eifa-gateway"
+work_dir="/opt/eifa-gateway"
 
 # requirements
 requirements(){
@@ -27,6 +27,8 @@ requirements(){
     fi
 }
 
+
+
 #  copy config
 copy_files(){
     echo "### Download and Copy Config Files ###"
@@ -42,17 +44,16 @@ copy_files(){
 
     # set ownership
     sudo chown -R  root:root $work_dir
-    sudo chmod -R  600 $work_dir
-    
+    sudo chmod -R  775 $work_dir    
 }
 
 # compose up
 compose_up(){
     echo "### Start ###"
-    sudo cd $work_dir
     export VERSION=v$version
-    sudo envsubst < $work_dir/docker-compose.yml > $work_dir/docker-compose.yml.tmp
-    sudo mv $work_dir/docker-compose.yml.tmp $work_dir/docker-compose.yml
+    envsubst < $work_dir/docker-compose.yml > /tmp/docker-compose.yml.tmp
+    sudo mv /tmp/docker-compose.yml.tmp $work_dir/docker-compose.yml
+    cd $work_dir
     sudo $composeCmd up -d
 }
 
