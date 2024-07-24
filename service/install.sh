@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-
-binUrl="https://github.com/erfan-272758/eifa-gateway-deploy/releases/download/v2.0.14/server"
+version=$1
+binUrl="https://github.com/erfan-272758/eifa-gateway-deploy/releases/download/v$version/server"
 serviceName="eifa-gateway.service"
 # requirements
 requirements(){
