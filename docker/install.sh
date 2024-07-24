@@ -17,6 +17,9 @@ requirements(){
         echo "please install docker compose"
         exit 1
     fi
+
+    sudo apt update -y
+    sudo apt install -y gettext
 }
 
 #  copy config
@@ -41,6 +44,8 @@ copy_files(){
 compose_up(){
     sudo cd $work_dir
     export VERSION=v$version
+    sudo envsubst < $work_dir/docker-compose.yml > $work_dir/docker-compose.yml.tmp
+    sudo mv $work_dir/docker-compose.yml.tmp $work_dir/docker-compose.yml
     sudo $composeCmd up -d
 }
 
