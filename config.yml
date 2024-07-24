@@ -1,24 +1,59 @@
+# clarify system behavior or logging 
 env: production
-timeZone: "Asia/Tehran"
+
+# set timezone for log time and crontab
+timeZone: "Asia/Tehran" 
+
 log:
   enable: true
-  level: 1
+
+  # 0=> error, 1=> info, 2=> verbose
+  level: 1 
+
+
+# http proxy face
 server:
   http:
     enable: true
-    port: 2780
+    port: 2780 
+
+
 auth:
-  internal:
+
+  # authentication between eifa-gateway and eifa-proxy ( servers )
+  internal: 
+
     enable:
-    method: 
+
+     # static mean it is a static key that append on header of requests
+    method:
+
     key: 
-backend:
+
+# config for eifa-proxy servers
+backend: 
+
+  # app name of eifa-proxy that eifa-gateway call a rest api to get eifa-proxy ips (dynamic way)
   app: 
-  watcher:
-  watcherPeriod:
-  preferSecure:
-  brokenThreshold: 1500
-  server:
+
+  # array of ips it is another way to pass eifa-proxy ips (static way)
+  ips: 
+  -
+
+  # enable or disable watcher
+  watcher: 
+
+  # time duration format like: 1m
+  watcherPeriod: 
+
+  # prefer secure protocol to communicate with eifa-proxies
+  preferSecure: 
+
+  # latency in ms, declare if a eifa-proxy ip is broken or not 
+  brokenThreshold: 1500 
+
+  # config for comminate into eifa-proxies
+  server: 
     tcp:
       enable:
       port: 
@@ -31,23 +66,48 @@ backend:
     grpc_s:
       enable:
       port: 
+
 monitor:
-  enable:
+  enable: 
+
   track:
+    # track latency and subscribe if a server ip status change base on 'brokenThreshold'
     latency:
-    request:
+
+    # tack requests and save time of a host request
+    request: 
+
     metric:
-      cron: "0 0 * * *"
-      topN: 10
-  subscribe:
-    telNotif:
+
+      # cron exp for subscribe metrics
+      cron: "0 0 * * *" 
+
+      # send top hosts on metrics
+      topN: 10 
+
+  # define subscribe ways
+  subscribe: 
+
+    # telegram bot way
+    telNotif: 
       enable:
-      token: 
-      channelId: 
-    log:
+      token:
+      channelId:
+
+    # log way
+    log: 
       enable:
+
+
+# server-list.yml is a file which include status of eifa-proxy servers and weights and latency which watcher try to update it
 server-list:
+
+  # it declare interval of persists base on watcher call for example 2 means after two step of watcher persists server-list.yml file, default is -1 mean only persists whenever terminate signal received
   persistStep:
-rules:
-  direct:
+
+# define rules of hosts
+rules: 
+
+  # array of strings which declare this hosts or hosts patterns must be direct and not proxy with eifa-proxy
+  direct: 
   -
