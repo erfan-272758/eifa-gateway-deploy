@@ -8,10 +8,10 @@ work_dir="/opt/deploy/eifa-gateway"
 # requirements
 requirements(){
     echo "### Check Requirements ###"
-    if docker-compose -v 2>/dev/null 1>/dev/null
+    if docker-compose 2>/dev/null 1>/dev/null
     then
         composeCmd="docker-compose"
-    elif docker compose -v 2>/dev/null 1>/dev/null
+    elif docker compose 2>/dev/null 1>/dev/null
     then
         composeCmd="docker compose"
     else

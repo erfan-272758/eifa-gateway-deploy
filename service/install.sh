@@ -8,8 +8,11 @@ repoUrl="https://raw.githubusercontent.com/erfan-272758/eifa-gateway-deploy/main
 # requirements
 requirements(){
     echo "### Install Requirements ###"
-    sudo apt update -y
-    sudo apt install -y wget
+    if ! wget --version 1>/dev/null 2>/dev/null
+    then
+        sudo apt update -y
+        sudo apt install -y wget
+    fi
 }
 
 # download raw file
