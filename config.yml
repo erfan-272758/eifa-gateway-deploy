@@ -1,113 +1,115 @@
-# clarify system behavior or logging 
+# yaml-language-server: $schema=https://raw.githubusercontent.com/erfan-272758/eifa-gateway-deploy/main/config-schema.json
+
+## clarify system behavior or logging 
 env: production
 
-# set timezone for log time and crontab
+## set timezone for log time and crontab
 timeZone: "Asia/Tehran" 
 
 log:
   enable: true
 
-  # 0=> error, 1=> info, 2=> verbose
-  level: 1 
+  ## 0=> error, 1=> info, 2=> verbose
+  level: 1
 
 
-# http proxy face
+## http proxy face
 server:
   http:
     enable: true
     port: 2780 
 
 
-auth:
+#auth:
 
-  # authentication between eifa-gateway and eifa-proxy ( servers )
-  internal: 
+  ## authentication between eifa-gateway and eifa-proxy ( servers )
+  #internal: 
 
-    enable:
+    #enable:
 
-     # static mean it is a static key that append on header of requests
-    method:
+     ## static mean it is a static key that append on header of requests
+    #method:
 
-    key: 
+    #key: 
 
-# config for eifa-proxy servers
+## config for eifa-proxy servers
 backend: 
 
-  # app name of eifa-proxy that eifa-gateway call a rest api to get eifa-proxy ips (dynamic way)
-  app: 
+  ## app name of eifa-proxy that eifa-gateway call a rest api to get eifa-proxy ips (dynamic way)
+  #app: 
 
-  # array of ips it is another way to pass eifa-proxy ips (static way)
-  ips: 
-  -
+  ## array of ips it is another way to pass eifa-proxy ips (static way)
+  #ips: 
+  #-
 
-  # enable or disable watcher
-  watcher: 
+  ## enable or disable watcher
+  watcher: true
 
-  # time duration format like: 1m
-  watcherPeriod: 
+  ## time duration format like: 1m
+  watcherPeriod: "1m"
 
-  # prefer secure protocol to communicate with eifa-proxies
-  preferSecure: 
+  ## prefer secure protocol to communicate with eifa-proxies
+  #preferSecure: 
 
-  # latency in ms, declare if a eifa-proxy ip is broken or not 
+  ## latency in ms, declare if a eifa-proxy ip is broken or not 
   brokenThreshold: 1500 
 
-  # config for comminate into eifa-proxies
-  server: 
-    tcp:
-      enable:
-      port: 
-    tcp_s:
-      enable:
-      port: 
-    grpc:
-      enable:
-      port: 
-    grpc_s:
-      enable:
-      port: 
+  ## config for comminate into eifa-proxies
+  #server: 
+    #tcp:
+      #enable:
+      #port: 
+    #tcp_s:
+      #enable:
+      #port: 
+    #grpc:
+      #enable:
+      #port: 
+    #grpc_s:
+      #enable:
+      #port: 
 
 monitor:
-  enable: 
+  enable: true
 
   track:
-    # track latency and subscribe if a server ip status change base on 'brokenThreshold'
-    latency:
+    ## track latency and subscribe if a server ip status change base on 'brokenThreshold'
+    latency: true
 
-    # tack requests and save time of a host request
-    request: 
+    ## tack requests and save time of a host request
+    request: true
 
     metric:
 
-      # cron exp for subscribe metrics
+      ## cron exp for subscribe metrics
       cron: "0 0 * * *" 
 
-      # send top hosts on metrics
+      ## send top hosts on metrics
       topN: 10 
 
-  # define subscribe ways
+  ## define subscribe ways
   subscribe: 
 
-    # telegram bot way
-    telNotif: 
-      enable:
-      token:
-      channelId:
+    ## telegram bot way
+    #telNotif: 
+      #enable:
+      #token:
+      #channelId:
 
-    # log way
+    ## log way
     log: 
-      enable:
+      enable: true
 
 
-# server-list.yml is a file which include status of eifa-proxy servers and weights and latency which watcher try to update it
+## server-list.yml is a file which include status of eifa-proxy servers and weights and latency which watcher try to update it
 server-list:
 
-  # it declare interval of persists base on watcher call for example 2 means after two step of watcher persists server-list.yml file, default is -1 mean only persists whenever terminate signal received
-  persistStep:
+  ## it declare interval of persists base on watcher call for example 2 means after two step of watcher persists server-list.yml file, default is -1 mean only persists whenever terminate signal received
+  persistStep: -1
 
-# define rules of hosts
-rules: 
+## define rules of hosts
+#rules: 
 
-  # array of strings which declare this hosts or hosts patterns must be direct and not proxy with eifa-proxy
-  direct: 
-  -
+  ## array of strings which declare this hosts or hosts patterns must be direct and not proxy with eifa-proxy
+  #direct: 
+  #-

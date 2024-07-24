@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "env": { "type": "string", "enum": ["development", "production"] },
+    "timeZone": { "type": "string" },
+    "log": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "level": { "type": "integer", "enum": [0, 1, 2] }
+      }
+    },
+    "server": {
+      "type": "object",
+      "properties": {
+        "http": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "port": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "internal": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "method": { "type": "string", "enum": ["static"] },
+            "key": { "type": "string" }
+          }
+        }
+      }
+    },
+    "backend": {
+      "type": "object",
+      "properties": {
+        "app": { "type": "string" },
+        "ips": { "type": "array" },
+        "watcher": { "type": "boolean" },
+        "watcherPeriod": { "type": "string" },
+        "preferSecure": { "type": "boolean" },
+        "brokenThreshold": { "type": "integer" },
+        "server": {
+          "type": "object",
+          "properties": {
+            "tcp": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" },
+                "port": { "type": "integer" }
+              }
+            },
+            "tcp_s": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" },
+                "port": { "type": "integer" }
+              }
+            },
+            "grpc": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" },
+                "port": { "type": "integer" }
+              }
+            },
+            "grpc_s": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" },
+                "port": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "monitor": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "track": {
+          "type": "object",
+          "properties": {
+            "latency": { "type": "boolean" },
+            "request": { "type": "boolean" },
+            "metric": {
+              "type": "object",
+              "properties": {
+                "cron": { "type": "string" },
+                "topN": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "subscribe": {
+          "type": "object",
+          "properties": {
+            "telNotif": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" },
+                "token": { "type": "string" },
+                "channelId": { "type": "string" }
+              }
+            },
+            "log": {
+              "type": "object",
+              "properties": {
+                "enable": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "server-list": {
+      "type": "object",
+      "properties": {
+        "persistStep": { "type": "integer" }
+      }
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "direct": { "type": "array" }
+      }
+    }
+  }
+}
