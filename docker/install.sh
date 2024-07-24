@@ -7,6 +7,7 @@ work_dir="/opt/deploy/eifa-gateway"
 
 # requirements
 requirements(){
+    echo "### Check Requirements ###"
     if docker-compose -v 2>/dev/null 1>/dev/null
     then
         composeCmd="docker-compose"
@@ -18,12 +19,14 @@ requirements(){
         exit 1
     fi
 
+    echo "### Install Requirements ###"
     sudo apt update -y
     sudo apt install -y gettext
 }
 
 #  copy config
 copy_files(){
+    echo "### Download and Copy Config Files ###"
     # work dir
     sudo mkdir -p $work_dir
 
@@ -42,6 +45,7 @@ copy_files(){
 
 # compose up
 compose_up(){
+    echo "### Start ###"
     sudo cd $work_dir
     export VERSION=v$version
     sudo envsubst < $work_dir/docker-compose.yml > $work_dir/docker-compose.yml.tmp

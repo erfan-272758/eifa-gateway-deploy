@@ -7,22 +7,26 @@ repoUrl="https://raw.githubusercontent.com/erfan-272758/eifa-gateway-deploy/main
 
 # requirements
 requirements(){
+    echo "### Install Requirements ###"
     sudo apt update -y
     sudo apt install -y wget
 }
 
 # download raw file
 download(){
+    echo "### Download Binary ###"
     wget -O /tmp/eifa-gateway $binUrl
 }
 # create service
 create_service(){
+    echo "### Create Service ###"
     wget -O /tmp/$serviceName $repoUrl/service/$serviceName
     sudo mv /tmp/$serviceName /etc/systemd/system/$serviceName
 }
 
 #  copy config
 copy_files(){
+    echo "### Download and Copy Config Files ###"
     # bin file
     sudo mv /tmp/eifa-gateway /usr/local/bin/eifa-gateway
    
@@ -50,6 +54,7 @@ copy_files(){
 
 # start service
 start_service(){
+    echo "### Start Service ###"
     sudo systemctl daemon-reload
     sudo systemctl enable $serviceName
     sudo systemctl start $serviceName
