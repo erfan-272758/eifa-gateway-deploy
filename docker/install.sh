@@ -20,8 +20,11 @@ requirements(){
     fi
 
     echo "### Install Requirements ###"
-    sudo apt update -y
-    sudo apt install -y gettext
+    if ! envsubst --version 1>/dev/null 2>/dev/null
+    then
+        sudo apt update -y
+        sudo apt install -y gettext
+    fi
 }
 
 #  copy config
