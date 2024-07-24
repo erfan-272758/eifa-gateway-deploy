@@ -9,45 +9,45 @@ server:
     port: 2780
 auth:
   internal:
-    enable: true
+    enable:
     method: 
     key: 
 backend:
   app: 
-  watcher: true
-  watcherPeriod: "1m"
-  preferSecure: false
+  watcher:
+  watcherPeriod:
+  preferSecure:
   brokenThreshold: 1500
   server:
     tcp:
-      enable: true
-      port: 32001
+      enable:
+      port: 
     tcp_s:
-      enable: false
-      port: 32002
+      enable:
+      port: 
     grpc:
-      enable: true
-      port: 32003
+      enable:
+      port: 
     grpc_s:
-      enable: false
-      port: 32004
+      enable:
+      port: 
 monitor:
-  enable: true
+  enable:
   track:
-    latency: true
-    request: true
+    latency:
+    request:
     metric:
       cron: "0 0 * * *"
       topN: 10
   subscribe:
     telNotif:
-      enable: true
+      enable:
       token: 
       channelId: 
     log:
-      enable: false
+      enable:
 server-list:
-  persistStep: 5
+  persistStep:
 rules:
   direct:
   -

@@ -1,0 +1,16 @@
+[Unit]
+Description=Eifa Gateway - A lightweight proxy service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+StartLimitIntervalSec=0
+StartLimitBurst=0
+User=root
+WorkingDirectory=/etc/eifa-gateway
+ExecStart=/usr/local/bin/eifa-gateway
+
+[Install]
+WantedBy=multi-user.target

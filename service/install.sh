@@ -3,6 +3,8 @@ set -e
 version=$1
 binUrl="https://github.com/erfan-272758/eifa-gateway-deploy/releases/download/v$version/server"
 serviceName="eifa-gateway.service"
+repoUrl="https://raw.githubusercontent.com/erfan-272758/eifa-gateway-deploy/main"
+
 # requirements
 requirements(){
     sudo apt update -y
@@ -15,25 +17,8 @@ download(){
 }
 # create service
 create_service(){
-    sudo cat > "/tmp/$serviceName" <<EOF
-[Unit]
-Description=Eifa Gateway - A lightweight proxy service
-After=network.target
-
-[Service]
-Type=simple
-Restart=always
-RestartSec=3
-StartLimitIntervalSec=0
-StartLimitBurst=0
-User=root
-WorkingDirectory=/etc/eifa-gateway
-ExecStart=/usr/local/bin/eifa-gateway
-
-[Install]
-WantedBy=multi-user.target
-EOF
-sudo mv /tmp/$serviceName /etc/systemd/system/$serviceName
+    wget -O /tmp/$serviceName $repoUrl/service/$serviceName
+    sudo mv /tmp/$serviceName /etc/systemd/system/$serviceName
 }
 
 #  copy config
@@ -46,10 +31,13 @@ copy_files(){
     if [ -e ./config.yml ] 
     then
         sudo cp ./config.yml /etc/eifa-gateway/
+    else
+        sudo wget -O /etc/eifa-gateway/config.yml $repoUrl/config.yml
+    
     fi
-    if [ -e ./config.yml ] 
+    if [ -e ./server-list.yml ] 
     then
-        sudo cp ./config.yml /etc/eifa-gateway/
+        sudo cp ./server-list.yml /etc/eifa-gateway/
     fi
 
     # set ownership
