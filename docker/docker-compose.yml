@@ -1,0 +1,11 @@
+version: "3"
+services:
+  eifa-gateway:
+    container_name: eifa-gateway
+    image: erfan272758/eifa-gateway:latest
+    restart: always
+    network_mode: host
+    volumes:
+      - ./config.yml:/app/config.yml
+      - ./server-list.yml:/app/server-list.yml
+
